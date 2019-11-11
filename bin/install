@@ -16,7 +16,7 @@ install() {
 
   mkdir -p "${bin_install_path}"
 
-  local binary="crc.gz"
+  local binary="crc.tar.xz"
 
   echo "Downloading CodeReady Containers ${version} from ${download_url} to ${bin_install_path}"
   install_executable $download_url $bin_install_path $binary
@@ -27,7 +27,7 @@ install_executable() {
   local path=$2
   local binary=$3
   wget "$download_url" -O "${path}/${binary}"
-  cd ${path} && gzip -d ${binary} && chmod +x crc && cd -
+  cd ${path} && tar -xf ${binary} && chmod +x crc && cd -
   rm -rf ${bin_install_path}/${binary}
 }
 
