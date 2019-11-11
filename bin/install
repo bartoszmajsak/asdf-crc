@@ -27,7 +27,7 @@ install_executable() {
   local path=$2
   local binary=$3
   wget "$download_url" -O "${path}/${binary}"
-  cd ${path} && tar -xf ${binary} && chmod +x crc && cd -
+  cd ${path} && tar xf ${binary} --strip-components=1 && chmod +x crc && cd -
   rm -rf ${bin_install_path}/${binary}
 }
 
