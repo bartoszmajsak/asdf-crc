@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+set -e
+set -o pipefail
+
+ASDF_INSTALL_TYPE=${ASDF_INSTALL_TYPE:-version  }
+[ -n "$ASDF_INSTALL_VERSION" ] || (>&2 echo 'Missing ASDF_INSTALL_VERSION' && exit 1)
+[ -n "$ASDF_INSTALL_PATH" ] || (>&2 echo 'Missing ASDF_INSTALL_PATH' && exit 1)
+
+install() {
+  local install_type=$1
+  local version=$2
+  local install_path=$3
+  local bin_install_path="$install_path/bin"
+  local download_url="$(get_download_url $version)"
+
+  mkdir -p "${bin_install_path}"
+
+  local binary="crc.gz"
+
+  echo "Downloading CodeReady Containers ${version} from ${download_url} to ${bin_install_path}"
+  install_executable $download_url $bin_install_path $binary
+}
+
+install_executable() {
+  local download_url=$1
+  local path=$2
+  local binary=$3
+  wget "$download_url" -O "${path}/${binary}"
+  cd ${path} && gzip -d ${binary} && chmod +x crc && cd -
+  rm -rf ${bin_install_path}/${binary}
+}
+
+get_arch() {
+  case "$(uname -s)" in
+
+    Darwin)
+      echo 'macos-amd64.tar.xz'
+      ;;
+
+    Linux)
+      echo 'linux-amd64.tar.xz'
+      ;;
+
+    CYGWIN*|MINGW32*|MSYS*)
+      echo 'windows-amd64.zip'
+      ;;
+
+    *)
+      echo 'other OS'
+      ;;
+  esac
+}
+
+get_download_url() {
+  local version="$1"
+  local filename=""
+  platform=$(get_arch)
+  filename="crc-${platform}"
+  echo "http://mirror.openshift.com/pub/openshift-v4/clients/crc/download/${version}/${filename}"
+}
+
+install $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH

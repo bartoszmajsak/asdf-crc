@@ -1,0 +1,16 @@
+= asdf-oc
+
+image::https://travis-ci.org/bartoszmajsak/asdf-crc.svg?branch=master)[link="https://travis-ci.org/bartoszmajsak/asdf-crc"]
+
+https://github.com/code-ready/[CodeReady Containers] plugin for https://github.com/asdf-vm/asdf[asdf] version manager.
+
+== Install
+
+[source,bash]
+----
+asdf plugin-add crc https://github.com/bartoszmajsak/asdf-crc.git
+----
+
+== Use
+
+Check out the https://github.com/asdf-vm/asdf#asdf-vm-[asdf README] for instructions on how to install and manage versions of variety of tools it supports.
