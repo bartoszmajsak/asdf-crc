@@ -1,4 +1,4 @@
-= asdf-oc
+= asdf-crc
 
 image::https://travis-ci.org/bartoszmajsak/asdf-crc.svg?branch=master)[link="https://travis-ci.org/bartoszmajsak/asdf-crc"]
 
