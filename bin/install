@@ -54,6 +54,7 @@ get_arch() {
 
 get_download_url() {
   local version="$1"
+  version="${version/#v/}"
   local filename=""
   platform=$(get_arch)
   filename="crc-${platform}"
